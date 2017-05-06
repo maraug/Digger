@@ -2,6 +2,7 @@ package com.mrcs.service;
 
 
 import com.mrcs.domain.User;
+import com.mrcs.domain.UserRole;
 import com.mrcs.repository.UserRepository;
 import com.mrcs.util.PasswordUtils;
 
@@ -18,12 +19,16 @@ public class UserService {
 	@Inject
 	UserService(UserRepository repository) {
 		this.repository = repository;
-
 	}
 
 	public void addUser(String username, String email, String password) {
-		String hasedPass = PasswordUtils.digestPassword(password);
-		User user = new User(username, hasedPass, email, "user");
+		String hashedPass = PasswordUtils.digestPassword(password);
+		User user = new User();
+		user.setUsername(username);
+		user.setEmail(email);
+		user.setPassword(hashedPass);
+		user.setRole(UserRole.USER);
+
 		repository.save(user);
 	}
 
@@ -36,17 +41,4 @@ public class UserService {
 		return repository.getUserByUsername(username);
 	}
 
-	public User getUserByUuid(String uuid) {
-		return repository.getUserByUuid(uuid);
-	}
-
-
-	public Cookie createUserCookie(String username) {
-		String uuid = UUID.randomUUID().toString();
-		Cookie cookie = new Cookie("DiggerCookie", uuid);
-		cookie.setPath("/login");
-		cookie.setMaxAge(60*60*7);
-		repository.setUserUuid(username, uuid);
-		return cookie;
-	}
 }

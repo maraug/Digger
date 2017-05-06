@@ -13,8 +13,8 @@ public class PasswordUtils {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(plainTextPassword.getBytes());
 			byte[] bytes = md.digest();
-			String sha256Password = new BigInteger(1, bytes).toString(16);
-			return sha256Password;
+			return new BigInteger(1, bytes).toString(16);
+
 
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException("Error encoding password", e);

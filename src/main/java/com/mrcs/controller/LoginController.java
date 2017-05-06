@@ -5,13 +5,11 @@ import com.mrcs.service.UserService;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Principal;
-import java.util.UUID;
+
 
 @WebServlet(name = "LoginController", value = "login")
 public class LoginController extends HttpServlet {
@@ -23,14 +21,13 @@ public class LoginController extends HttpServlet {
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		Boolean rememberMe = Boolean.valueOf(request.getParameter("rememberMe"));
+
 
 		try {
 			request.login(username, password);
-			if (rememberMe) {
-				Cookie cookie = userService.createUserCookie(username);
-				response.addCookie(cookie);
-			}
+
+			userService.saveUserInSession(username, request.getSession(true));
+
 			response.sendRedirect("home");
 		} catch (ServletException e) {
 			response.sendRedirect("login");

@@ -9,13 +9,11 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-		@NamedQuery(name = User.FIND_BY_USERNAME, query = "SELECT user FROM User user WHERE user.username= :username"),
-		@NamedQuery(name = User.FIND_BY_USERNAME, query = "SELECT user FROM User user WHERE user.uuid= :uuid")
+		@NamedQuery(name = User.FIND_BY_USERNAME, query = "SELECT user FROM User user WHERE user.username= :username")
 })
 public class User implements Serializable{
 
 	public static final String FIND_BY_USERNAME = "User.findByUsername";
-	public static final String FIND_BY_UUID = "User.findByUuid";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,22 +28,28 @@ public class User implements Serializable{
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column(length = 256)
-	private String uuid;
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private UserRole role;
 
-	@ElementCollection
-	@CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
-	@Column(name = "role")
-	private Set<String> roles = new HashSet<>();
+	//@OneToMany(mappedBy = "user")
+	//Set<Discovery> discoveries;
 
 	public User() {
 	}
 
-	public User(String username, String password, String email, String role) {
+	public User(String username, String password, String email, UserRole role) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.roles.add(role);
+		this.role = role;
+	}
+
+	public User(User user) {
+		this.username = user.username;
+		this.password = user.password;
+		this.email = user.email;
+		this.role = user.role;
 	}
 
 	public Long getId() {
@@ -80,19 +84,12 @@ public class User implements Serializable{
 		this.email = email;
 	}
 
-	public String getUuid() {
-		return uuid;
+	public UserRole getRole() {
+		return role;
 	}
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	public void setRole(UserRole role) {
+		this.role = role;
 	}
 
-	public Set<String> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<String> roles) {
-		this.roles = roles;
-	}
 }

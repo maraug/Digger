@@ -30,16 +30,4 @@ public class UserRepository {
 		return query.getSingleResult();
 	}
 
-	public User getUserByUuid(String uuid) {
-		TypedQuery<User> query = em.createNamedQuery(User.FIND_BY_UUID, User.class);
-		query.setParameter("uuid", uuid);
-		return query.getSingleResult();
-	}
-
-	public void setUserUuid(String username, String uuid) {
-		User user = getUserByUsername(username);
-		user.setUuid(uuid);
-	}
-
-
 }
