@@ -43,7 +43,7 @@
 				<div class="col col-md-11 col-sm-10">
 					<h3 class="centered"><a href="${discovery.url}"><c:out value="${discovery.name}"/></a></h3>
 					<h6><small>Added by: <c:out value="${discovery.user.username}"/>,
-						on #DATE# </small></h6>
+						on <fmt:formatDate value="${discovery.timestamp}" pattern="dd-MM-YYYY HH:mm:ss"/></small></h6>
 					<p><c:out value="${discovery.description}" /></p>
 					<a href="${discovery.url}"><button class="btn btn-default btn-xs">Open page</button></a>
 				</div>

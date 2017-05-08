@@ -3,12 +3,15 @@ package com.mrcs.service;
 
 import com.mrcs.domain.Discovery;
 import com.mrcs.domain.User;
+import com.mrcs.domain.Vote;
+import com.mrcs.domain.VoteType;
 import com.mrcs.repository.DiscoveryRepository;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 public class DiscoveryService {
 
@@ -22,17 +25,31 @@ public class DiscoveryService {
 		discovery.setUrl(url);
 		discovery.setDescription(description);
 		discovery.setUser(authenticatedUser);
-		discovery.setTimestamp(LocalDateTime.now());
+		discovery.setTimestamp(new Date());
 
 		repository.save(discovery);
-
-
 	}
 
-	public Set<Discovery> getAllDiscoveries() {
-		Set<Discovery> discoveries = repository.getAllDiscoveries();
+	public List<Discovery> getAllDiscoveries() {
+		List<Discovery> discoveries = repository.getAllDiscoveries();
+		discoveries.forEach(
+				d -> {
+					Map<VoteType, Long> votesCount = d.getVotes().stream()
+							.collect(Collectors.groupingBy(Vote::getVoteType, Collectors.counting()));
+					System.out.println(votesCount);
+					if (votesCount.containsKey(VoteType.UP_VOTE)) {
+						d.setUpVote(votesCount.get(VoteType.UP_VOTE));
+					}
+					if (votesCount.containsKey(VoteType.DOWN_VOTE)) {
+						d.setDownVote(votesCount.get(VoteType.DOWN_VOTE));
+					}
+				}
+		);
+
+		Comparator<Discovery> dateComparator = Comparator.comparing(Discovery::getTimestamp, Comparator.reverseOrder());
+
+		discoveries.sort(dateComparator);
 
 		return discoveries;
-
 	}
 }

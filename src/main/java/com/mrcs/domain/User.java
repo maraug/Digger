@@ -9,15 +9,15 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-		@NamedQuery(name = User.FIND_BY_USERNAME, query = "SELECT user FROM User user WHERE user.username= :username")
+		@NamedQuery(name = User.FIND_BY_USERNAME, query = "SELECT user FROM User user WHERE user.username = :username")
 })
-public class User implements Serializable{
+public class User implements Serializable {
 
 	public static final String FIND_BY_USERNAME = "User.findByUsername";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long userId;
 
 	@Column(length = 20, nullable = false, unique = true)
 	private String username;
@@ -32,8 +32,11 @@ public class User implements Serializable{
 	@Column(nullable = false)
 	private UserRole role;
 
-	//@OneToMany(mappedBy = "user")
-	//Set<Discovery> discoveries;
+	@OneToMany(mappedBy = "user")
+	private Set<Discovery> discoveries;
+
+	@OneToMany(mappedBy = "user")
+	private Set<Vote> votes;
 
 	public User() {
 	}
@@ -52,12 +55,12 @@ public class User implements Serializable{
 		this.role = user.role;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getUsername() {
@@ -92,4 +95,19 @@ public class User implements Serializable{
 		this.role = role;
 	}
 
+	public Set<Discovery> getDiscoveries() {
+		return discoveries;
+	}
+
+	public void setDiscoveries(Set<Discovery> discoveries) {
+		this.discoveries = discoveries;
+	}
+
+	public Set<Vote> getVotes() {
+		return votes;
+	}
+
+	public void setVotes(Set<Vote> votes) {
+		this.votes = votes;
+	}
 }
