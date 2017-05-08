@@ -2,12 +2,14 @@ package com.mrcs.repository;
 
 
 import com.mrcs.domain.Discovery;
+import com.mrcs.domain.VoteType;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -27,8 +29,15 @@ public class DiscoveryRepository {
 		em.persist(discovery);
 	}
 
-	public Set<Discovery> getAllDiscoveries() {
+	public List<Discovery> getAllDiscoveries() {
 		TypedQuery<Discovery> query = em.createNamedQuery(Discovery.FIND_ALL, Discovery.class);
-		return new HashSet<>(query.getResultList());
+		return query.getResultList();
 	}
+
+	public Discovery getDiscoveryById(long discoveryId) {
+		TypedQuery<Discovery> query = em.createNamedQuery(Discovery.FIND_BY_ID, Discovery.class);
+		query.setParameter("discoveryId", discoveryId);
+		return query.getSingleResult();
+	}
+
 }

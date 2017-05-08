@@ -15,7 +15,7 @@ import java.io.IOException;
 public class DiscoveryAddController extends HttpServlet {
 
 	@Inject
-	DiscoveryService discoveryService;
+	private DiscoveryService discoveryService;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

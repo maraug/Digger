@@ -22,7 +22,6 @@ public class LoginController extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 
-
 		try {
 			request.login(username, password);
 
@@ -36,6 +35,7 @@ public class LoginController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		if (request.getUserPrincipal() == null) {
 			request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
 		} else {
