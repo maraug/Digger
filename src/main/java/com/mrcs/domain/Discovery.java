@@ -11,7 +11,7 @@ import java.util.Set;
 @Table(name = "discoveries")
 @NamedQueries({
 		@NamedQuery(name = Discovery.FIND_ALL, query = "SELECT d FROM Discovery d JOIN FETCH d.user"),
-		@NamedQuery(name = Discovery.FIND_BY_ID, query = "SELECT d FROM Discovery d WHERE d.id = :discoveryId")
+		@NamedQuery(name = Discovery.FIND_BY_ID, query = "SELECT d FROM Discovery d JOIN FETCH d.user WHERE d.id = :discoveryId")
 })
 public class Discovery implements Serializable  {
 
@@ -128,29 +128,4 @@ public class Discovery implements Serializable  {
 		this.votes = votes;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		Discovery discovery = (Discovery) o;
-
-		if (discoveryId != discovery.discoveryId) return false;
-		if (!name.equals(discovery.name)) return false;
-		if (!description.equals(discovery.description)) return false;
-		if (!url.equals(discovery.url)) return false;
-		if (!user.equals(discovery.user)) return false;
-		return timestamp != null ? timestamp.equals(discovery.timestamp) : discovery.timestamp == null;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = (int) (discoveryId ^ (discoveryId >>> 32));
-		result = 31 * result + name.hashCode();
-		result = 31 * result + description.hashCode();
-		result = 31 * result + url.hashCode();
-		result = 31 * result + user.hashCode();
-		result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
-		return result;
-	}
 }

@@ -52,4 +52,8 @@ public class DiscoveryService {
 
 		return discoveries;
 	}
+
+	public Discovery getDiscoveryById(long discoveryId) {
+		return repository.getDiscoveryById(discoveryId);
+	}
 }
