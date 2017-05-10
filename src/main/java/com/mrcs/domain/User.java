@@ -35,8 +35,8 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user")
 	private Set<Discovery> discoveries;
 
-	@OneToMany(mappedBy = "user")
-	private Set<Vote> votes;
+//	@OneToMany(mappedBy = "user")
+//	private Set<Vote> votes;
 
 	public User() {
 	}
@@ -103,11 +103,11 @@ public class User implements Serializable {
 		this.discoveries = discoveries;
 	}
 
-	public Set<Vote> getVotes() {
-		return votes;
-	}
-
-	public void setVotes(Set<Vote> votes) {
-		this.votes = votes;
-	}
+//	public Set<Vote> getVotes() {
+//		return votes;
+//	}
+//
+//	public void setVotes(Set<Vote> votes) {
+//		this.votes = votes;
+//	}
 }

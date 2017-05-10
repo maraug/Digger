@@ -34,14 +34,14 @@
 			<c:set var="votes" value="${discovery.upVote - discovery.downVote}"/>
 			<div class="row bs-callout bs-callout-primary">
 				<div class="col col-md-1 col-sm-2">
-					<a href="vote?discovery_id=${discovery.discoveryId}&vote=UP_VOTE"
+					<a href="vote?discovery_id=${discovery.id}&vote=UP_VOTE"
 					   class="btn btn-block btn-primary btn-success"><span class="glyphicon glyphicon-arrow-up"></span></a>
 					<div class="well well-sm centered text-center"><c:out value="${votes}"/></div>
-					<a href="vote?discovery_id=${discovery.discoveryId}&vote=DOWN_VOTE"
+					<a href="vote?discovery_id=${discovery.id}&vote=DOWN_VOTE"
 					   class="btn btn-block btn-primary btn-warning"><span class="glyphicon glyphicon-arrow-down"></span></a>
 				</div>
 				<div class="col col-md-11 col-sm-10">
-					<h3 class="centered"><a href=discovery?id=${discovery.discoveryId}><c:out value="${discovery.name}"/></a></h3>
+					<h3 class="centered"><a href=discovery?id=${discovery.id}><c:out value="${discovery.name}"/></a></h3>
 					<h6><small>Added by: <c:out value="${discovery.user.username}"/>,
 						on <fmt:formatDate value="${discovery.timestamp}" pattern="dd-MM-YYYY HH:mm:ss"/></small></h6>
 					<p><c:out value="${discovery.description}" /></p>

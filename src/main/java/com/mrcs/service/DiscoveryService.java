@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class DiscoveryService {
 
 	@Inject
-	DiscoveryRepository repository;
+	private DiscoveryRepository repository;
 
 	public void addDiscovery(String name, String url, String description, User authenticatedUser) {
 
@@ -32,28 +32,29 @@ public class DiscoveryService {
 
 	public List<Discovery> getAllDiscoveries() {
 		List<Discovery> discoveries = repository.getAllDiscoveries();
-		discoveries.forEach(
-				d -> {
-					Map<VoteType, Long> votesCount = d.getVotes().stream()
-							.collect(Collectors.groupingBy(Vote::getVoteType, Collectors.counting()));
-					System.out.println(votesCount);
-					if (votesCount.containsKey(VoteType.UP_VOTE)) {
-						d.setUpVote(votesCount.get(VoteType.UP_VOTE));
-					}
-					if (votesCount.containsKey(VoteType.DOWN_VOTE)) {
-						d.setDownVote(votesCount.get(VoteType.DOWN_VOTE));
-					}
-				}
-		);
+		discoveries.forEach(this::countVotes);
 
 		Comparator<Discovery> dateComparator = Comparator.comparing(Discovery::getTimestamp, Comparator.reverseOrder());
-
 		discoveries.sort(dateComparator);
 
 		return discoveries;
 	}
 
 	public Discovery getDiscoveryById(long discoveryId) {
-		return repository.getDiscoveryById(discoveryId);
+		Discovery discovery = repository.getDiscoveryById(discoveryId);
+		countVotes(discovery);
+		return discovery;
+	}
+
+	private void countVotes(Discovery discovery) {
+		Map<VoteType, Long> votesCount = discovery.getVotes().stream()
+				.collect(Collectors.groupingBy(Vote::getVoteType, Collectors.counting()));
+		System.out.println(votesCount);
+		if (votesCount.containsKey(VoteType.UP_VOTE)) {
+			discovery.setUpVote(votesCount.get(VoteType.UP_VOTE));
+		}
+		if (votesCount.containsKey(VoteType.DOWN_VOTE)) {
+			discovery.setDownVote(votesCount.get(VoteType.DOWN_VOTE));
+		}
 	}
 }

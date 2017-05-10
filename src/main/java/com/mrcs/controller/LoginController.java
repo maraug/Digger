@@ -27,7 +27,7 @@ public class LoginController extends HttpServlet {
 
 			userService.saveUserInSession(username, request.getSession(true));
 
-			response.sendRedirect("home");
+			response.sendRedirect(request.getContextPath());
 		} catch (ServletException e) {
 			response.sendRedirect("login");
 		}

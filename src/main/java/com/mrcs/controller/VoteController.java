@@ -29,6 +29,9 @@ public class VoteController extends HttpServlet {
 		String voteType = request.getParameter("vote");
 		voteService.processVote(authenticatedUser, discoveryId, voteType);
 
-		response.sendRedirect(request.getContextPath() + "/");
+		String referer = request.getHeader("Referer");
+		String requestPath = request.getContextPath() + referer.substring(referer.lastIndexOf("/"));
+
+		response.sendRedirect(requestPath);
 	}
 }

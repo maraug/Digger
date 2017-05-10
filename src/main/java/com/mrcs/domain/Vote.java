@@ -18,10 +18,10 @@ public class Vote implements Serializable {
 	private long voteId;
 
 	@ManyToOne
-	@JoinColumn(name = "discovery_id", referencedColumnName = "discoveryId")
+	@JoinColumn(name = "discovery_id", referencedColumnName = "id")
 	private Discovery discovery;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "userId")
 	private User user;
 

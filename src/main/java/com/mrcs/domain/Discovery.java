@@ -4,7 +4,6 @@ package com.mrcs.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,7 +19,7 @@ public class Discovery implements Serializable  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long discoveryId;
+	private long id;
 
 	private String name;
 	private String description;
@@ -41,10 +40,13 @@ public class Discovery implements Serializable  {
 	@Transient
 	private long downVote;
 
+	@OneToMany(mappedBy = "discovery", fetch = FetchType.EAGER)
+	private Set<Comment> comments;
+
 	public Discovery() {}
 
 	public Discovery(Discovery discovery) {
-		this.discoveryId = discovery.discoveryId;
+		this.id = discovery.id;
 		this.name = discovery.name;
 		this.description = discovery.description;
 		this.url = discovery.url;
@@ -56,12 +58,12 @@ public class Discovery implements Serializable  {
 		this.downVote = discovery.downVote;
 	}
 
-	public long getDiscoveryId() {
-		return discoveryId;
+	public long getId() {
+		return id;
 	}
 
-	public void setDiscoveryId(long discoveryId) {
-		this.discoveryId = discoveryId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -126,6 +128,14 @@ public class Discovery implements Serializable  {
 
 	public void setVotes(Set<Vote> votes) {
 		this.votes = votes;
+	}
+
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
 	}
 
 }

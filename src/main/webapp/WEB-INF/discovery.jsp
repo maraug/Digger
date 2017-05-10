@@ -28,68 +28,79 @@
 
 <div class="container">
 
-	<c:if test="${not empty requestScope.discovery}">
-		<c:set var="votes" value="${discovery.upVote - discovery.downVote}"/>
-		<div class="row bs-callout bs-callout-primary">
-			<div class="col col-md-1 col-sm-2">
-				<a href="vote?discovery_id=${discovery.discoveryId}&vote=UP_VOTE"
-				   class="btn btn-block btn-primary btn-success"><span class="glyphicon glyphicon-arrow-up"></span></a>
-				<div class="well well-sm centered text-center"><c:out value="${votes}"/></div>
-				<a href="vote?discovery_id=${discovery.discoveryId}&vote=DOWN_VOTE"
-				   class="btn btn-block btn-primary btn-warning"><span
-						class="glyphicon glyphicon-arrow-down"></span></a>
-			</div>
-			<div class="col col-md-11 col-sm-10">
-				<h3 class="centered"><a href="${discovery.url}"><c:out value="${discovery.name}"/></a></h3>
-				<h6>
-					<small>Added by: <c:out value="${discovery.user.username}"/>,
-						on <fmt:formatDate value="${discovery.timestamp}" pattern="dd-MM-YYYY HH:mm:ss"/></small>
-				</h6>
-				<p><c:out value="${discovery.description}"/></p>
-				<a href="${discovery.url}">
-					<button class="btn btn-default btn-xs">Open page</button>
-				</a>
-			</div>
+	<c:set var="votes" value="${discovery.upVote - discovery.downVote}"/>
+	<div class="row bs-callout bs-callout-primary">
+		<div class="col col-md-1 col-sm-2">
+			<a href="vote?discovery_id=${discovery.id}&vote=UP_VOTE"
+			   class="btn btn-block btn-primary btn-success"><span class="glyphicon glyphicon-arrow-up"></span></a>
+			<div class="well well-sm centered text-center"><c:out value="${votes}"/></div>
+			<a href="vote?discovery_id=${discovery.id}&vote=DOWN_VOTE"
+			   class="btn btn-block btn-primary btn-warning"><span
+					class="glyphicon glyphicon-arrow-down"></span></a>
 		</div>
+		<div class="col col-md-11 col-sm-10">
+			<h3 class="centered"><a href="${discovery.url}"><c:out value="${discovery.name}"/></a></h3>
+			<h6>
+				<small>Added by: <c:out value="${discovery.user.username}"/>,
+					on <fmt:formatDate value="${discovery.timestamp}" pattern="dd-MM-YYYY HH:mm:ss"/></small>
+			</h6>
+			<p><c:out value="${discovery.description}"/></p>
+			<a href="${discovery.url}">
+				<button class="btn btn-default btn-xs">Open page</button>
+			</a>
+		</div>
+	</div>
 
+	<c:if test="${not empty requestScope.comments}">
+		<c:forEach var="comment" items="${requestScope.comments}">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title"> username / timestamp </h3>
+						<h3 class="panel-title"> ${comment.author.username} on <fmt:formatDate value="${comment.timestamp}" pattern="dd-MM-YYYY HH:mm:ss"/></h3>
 					</div>
 					<div class="panel-body">
-						Comment content
+						${comment.content}
 					</div>
-					<div class="row">
-						<div class="col-md-offset-1 col-md-11">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title"> username / timestamp </h3>
-								</div>
-								<div class="panel-body">
-									Comment content
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-offset-1 col-md-11">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title"> username / timestamp </h3>
-								</div>
-								<div class="panel-body">
-									Comment content
-								</div>
-							</div>
-						</div>
-					</div>
+
+					<%--response div--%>
+					<%--<div class="row">--%>
+						<%--<div class="col-md-offset-1 col-md-11">--%>
+							<%--<div class="panel panel-default">--%>
+								<%--<div class="panel-heading">--%>
+									<%--<h3 class="panel-title"> username / timestamp </h3>--%>
+								<%--</div>--%>
+								<%--<div class="panel-body">--%>
+									<%--Comment content--%>
+								<%--</div>--%>
+							<%--</div>--%>
+						<%--</div>--%>
+					<%--</div>--%>
+
 				</div>
 			</div>
 		</div>
-
+		</c:forEach>
 	</c:if>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form class="form-signin" method="post" action="comment">
+						<input name="discoveryId" type="hidden" value="${discovery.id}">
+						<textarea name="comment" rows="5" class="form-control" placeholder="Comment...."
+						          required autofocus></textarea>
+						<div class="text-center">
+							<button type="button" class="btn btn-link">Clear</button>
+							<button type="submit" class="btn btn-default">Add</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 
 <%--------------------
