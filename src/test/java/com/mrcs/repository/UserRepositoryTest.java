@@ -39,17 +39,16 @@ public class UserRepositoryTest {
 	}
 
 	@Test
-	public void shouldReturnUserByUsernameIf() {
-		when(user.getUsername()).thenReturn(ANY_NAME);
+	public void shouldReturnUserByUsernameIfExists() {
+//		when(user.getUsername()).thenReturn(ANY_NAME);
 
 		when(em.createNamedQuery(anyString(), any())).thenReturn(query);
 		when(query.getSingleResult()).thenReturn(user);
 
-		//User result = sut.getUserByUsername(user.getUsername());
-
-		assertEquals(user, sut.getUserByUsername(user.getUsername()));
+		assertEquals(user, sut.getUserByUsername(ANY_NAME));
 		verify(query).getSingleResult();
 	}
+
 
 
 

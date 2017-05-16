@@ -15,8 +15,12 @@ import java.util.stream.Collectors;
 
 public class DiscoveryService {
 
-	@Inject
 	private DiscoveryRepository repository;
+
+	@Inject
+	public DiscoveryService(DiscoveryRepository repository) {
+		this.repository = repository;
+	}
 
 	public void addDiscovery(String name, String url, String description, User authenticatedUser) {
 

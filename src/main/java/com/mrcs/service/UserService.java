@@ -17,7 +17,7 @@ public class UserService {
 	private UserRepository repository;
 
 	@Inject
-	UserService(UserRepository repository) {
+	public UserService(UserRepository repository) {
 		this.repository = repository;
 	}
 

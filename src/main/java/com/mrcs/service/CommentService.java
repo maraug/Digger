@@ -12,11 +12,15 @@ import java.util.List;
 
 public class CommentService {
 
-	@Inject
 	private CommentRepository repository;
 
-	@Inject
 	private DiscoveryService discoveryService;
+
+	@Inject
+	public CommentService(CommentRepository repository, DiscoveryService discoveryService) {
+		this.repository = repository;
+		this.discoveryService = discoveryService;
+	}
 
 	public void addComment(String content, User author, long discoveryId) {
 

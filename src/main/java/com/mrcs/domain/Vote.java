@@ -10,19 +10,16 @@ import java.util.Date;
 @NamedQueries({
 		@NamedQuery(name = Vote.FIND_BY_USER_AND_DISCOVERY, query = "SELECT vote FROM Vote vote WHERE vote.user.id = :userId AND vote.discovery.id = :discoveryId")
 })
-public class Vote implements Serializable {
+public class Vote extends BaseEntity {
 
 	public static final String FIND_BY_USER_AND_DISCOVERY = "Vote.findByUserAndDiscovery";
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long voteId;
 
 	@ManyToOne
 	@JoinColumn(name = "discovery_id", referencedColumnName = "id")
 	private Discovery discovery;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", referencedColumnName = "userId")
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 
 	private Date timestamp;
@@ -30,14 +27,6 @@ public class Vote implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private VoteType voteType;
 
-
-	public long getVoteId() {
-		return voteId;
-	}
-
-	public void setVoteId(long voteId) {
-		this.voteId = voteId;
-	}
 
 	public Discovery getDiscovery() {
 		return discovery;
