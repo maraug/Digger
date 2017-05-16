@@ -16,7 +16,7 @@ public class UserRepository {
 	UserRepository() {}
 
 	@Inject
-	UserRepository(EntityManager em) {
+	public UserRepository(EntityManager em) {
 		this.em = em;
 	}
 

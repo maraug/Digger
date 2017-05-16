@@ -35,4 +35,9 @@ public class CommentRepository {
 		}
 		return results;
 	}
+
+	public void deleteComment(Long commentId) {
+		Comment commentToDelete = em.find(Comment.class, commentId);
+		em.remove(commentToDelete);
+	}
 }

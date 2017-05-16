@@ -19,7 +19,7 @@ public class DiscoveryRepository {
 	private EntityManager em;
 
 	@Inject
-	DiscoveryRepository(EntityManager em) {
+	public DiscoveryRepository(EntityManager em) {
 		this.em = em;
 	}
 

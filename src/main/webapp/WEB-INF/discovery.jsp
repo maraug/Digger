@@ -27,7 +27,7 @@
 ---------------------%>
 
 <div class="container">
-
+	<c:set var="admin" value="${pageContext.request.isUserInRole('ADMIN')}"/>
 	<c:set var="votes" value="${discovery.upVote - discovery.downVote}"/>
 	<div class="row bs-callout bs-callout-primary">
 		<div class="col col-md-1 col-sm-2">
@@ -53,33 +53,42 @@
 
 	<c:if test="${not empty requestScope.comments}">
 		<c:forEach var="comment" items="${requestScope.comments}">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title"> ${comment.author.username} on <fmt:formatDate value="${comment.timestamp}" pattern="dd-MM-YYYY HH:mm:ss"/></h3>
-					</div>
-					<div class="panel-body">
-						${comment.content}
-					</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<c:if test="${admin}">
+									<a href="comment?comment_id=${comment.id}&action=delete"
+									   class="btn btn-default btn-xs">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									</a>
+								</c:if>
+									${comment.author.username} on <fmt:formatDate value="${comment.timestamp}"
+									                                              pattern="dd-MM-YYYY HH:mm:ss"/>
+							</h3>
+						</div>
+						<div class="panel-body">
+								${comment.content}
+						</div>
 
-					<%--response div--%>
-					<%--<div class="row">--%>
-						<%--<div class="col-md-offset-1 col-md-11">--%>
+							<%--response div--%>
+							<%--<div class="row">--%>
+							<%--<div class="col-md-offset-1 col-md-11">--%>
 							<%--<div class="panel panel-default">--%>
-								<%--<div class="panel-heading">--%>
-									<%--<h3 class="panel-title"> username / timestamp </h3>--%>
-								<%--</div>--%>
-								<%--<div class="panel-body">--%>
-									<%--Comment content--%>
-								<%--</div>--%>
+							<%--<div class="panel-heading">--%>
+							<%--<h3 class="panel-title"> username / timestamp </h3>--%>
 							<%--</div>--%>
-						<%--</div>--%>
-					<%--</div>--%>
+							<%--<div class="panel-body">--%>
+							<%--Comment content--%>
+							<%--</div>--%>
+							<%--</div>--%>
+							<%--</div>--%>
+							<%--</div>--%>
 
+					</div>
 				</div>
 			</div>
-		</div>
 		</c:forEach>
 	</c:if>
 
@@ -89,7 +98,8 @@
 				<div class="panel-body">
 					<form class="form-signin" method="post" action="comment">
 						<input name="discoveryId" type="hidden" value="${discovery.id}">
-						<textarea  id="commentArea" name="comment" rows="5" class="form-control" placeholder="Comment...."
+						<textarea id="commentArea" name="comment" rows="5" class="form-control"
+						          placeholder="Comment...."
 						          required autofocus></textarea>
 						<div class="text-center">
 							<button type="button" class="btn btn-link" onclick="eraseText()">Clear</button>

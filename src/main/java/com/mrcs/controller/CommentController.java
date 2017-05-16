@@ -1,6 +1,5 @@
 package com.mrcs.controller;
 
-import com.mrcs.domain.Discovery;
 import com.mrcs.domain.User;
 import com.mrcs.service.CommentService;
 
@@ -26,10 +25,24 @@ public class CommentController extends HttpServlet {
 
 		commentService.addComment(comment, author, discoveryId);
 
-		response.sendRedirect((request.getContextPath() + "/discovery?id=") + discoveryId);
+		//response.sendRedirect((request.getContextPath() + "/discovery?id=") + discoveryId);
+		String referer = request.getHeader("Referer");
+		String requestPath = request.getContextPath() + referer.substring(referer.lastIndexOf("/"));
+
+		response.sendRedirect(requestPath);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Long commentId = Long.valueOf(request.getParameter("comment_id"));
+		String action = request.getParameter("action");
 
+		if ("delete".equals(action)) {
+			commentService.deleteComment(commentId);
+		}
+
+		String referer = request.getHeader("Referer");
+		String requestPath = request.getContextPath() + referer.substring(referer.lastIndexOf("/"));
+
+		response.sendRedirect(requestPath);
 	}
 }

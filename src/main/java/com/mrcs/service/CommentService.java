@@ -40,4 +40,8 @@ public class CommentService {
 		}
 		return comments;
 	}
+
+	public void deleteComment(Long commentId) {
+		repository.deleteComment(commentId);
+	}
 }

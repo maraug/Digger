@@ -15,7 +15,7 @@ public class VoteRepository {
 	private EntityManager em;
 
 	@Inject
-	VoteRepository(EntityManager em) {
+	public VoteRepository(EntityManager em) {
 		this.em = em;
 	}
 

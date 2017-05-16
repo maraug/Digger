@@ -11,7 +11,34 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Auth</web-resource-name>
-            <description>Resources that can be accessed after login</description>
+            <description>Resources that can be accessed as USER by GET</description>
+            <url-pattern>/add</url-pattern>
+            <url-pattern>/vote</url-pattern>
+            <http-method>GET</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>USER</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Auth</web-resource-name>
+            <description>Resources that can be accessed as USER by POST</description>
+            <url-pattern>/add</url-pattern>
+            <url-pattern>/vote</url-pattern>
+            <url-pattern>/comment</url-pattern>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>USER</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Auth</web-resource-name>
+            <description>Resources that can be accessed as ADMIN</description>
             <url-pattern>/add</url-pattern>
             <url-pattern>/vote</url-pattern>
             <url-pattern>/comment</url-pattern>
@@ -19,7 +46,6 @@
             <http-method>POST</http-method>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>USER</role-name>
             <role-name>ADMIN</role-name>
         </auth-constraint>
     </security-constraint>
