@@ -24,7 +24,7 @@ public class VoteService {
 
 	public void processVote(User authenticatedUser, long discoveryId, String voteType) {
 
-		long userId = authenticatedUser.getUserId();
+		long userId = authenticatedUser.getId();
 		Vote vote = voteRepository.getVoteByUserAndDiscovery(userId, discoveryId);
 		if (vote == null) {
 			vote = new Vote();

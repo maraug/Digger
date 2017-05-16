@@ -12,17 +12,18 @@ import java.util.Set;
 		@NamedQuery(name = Discovery.FIND_ALL, query = "SELECT d FROM Discovery d JOIN FETCH d.user"),
 		@NamedQuery(name = Discovery.FIND_BY_ID, query = "SELECT d FROM Discovery d JOIN FETCH d.user WHERE d.id = :discoveryId")
 })
-public class Discovery implements Serializable  {
+public class Discovery extends BaseEntity {
 
 	public static final String FIND_ALL = "Discovery.findAll";
 	public static final String FIND_BY_ID = "Discovery.findById";
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-
+	@Column(unique = true, nullable = false)
 	private String name;
+
+	@Column(nullable = false)
 	private String description;
+
+	@Column(nullable = false)
 	private String url;
 
 	@ManyToOne
@@ -44,27 +45,6 @@ public class Discovery implements Serializable  {
 	private Set<Comment> comments;
 
 	public Discovery() {}
-
-	public Discovery(Discovery discovery) {
-		this.id = discovery.id;
-		this.name = discovery.name;
-		this.description = discovery.description;
-		this.url = discovery.url;
-		this.user = discovery.user;
-
-		this.timestamp = discovery.timestamp;
-
-		this.upVote = discovery.upVote;
-		this.downVote = discovery.downVote;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;

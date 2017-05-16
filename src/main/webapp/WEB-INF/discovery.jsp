@@ -89,10 +89,10 @@
 				<div class="panel-body">
 					<form class="form-signin" method="post" action="comment">
 						<input name="discoveryId" type="hidden" value="${discovery.id}">
-						<textarea name="comment" rows="5" class="form-control" placeholder="Comment...."
+						<textarea  id="commentArea" name="comment" rows="5" class="form-control" placeholder="Comment...."
 						          required autofocus></textarea>
 						<div class="text-center">
-							<button type="button" class="btn btn-link">Clear</button>
+							<button type="button" class="btn btn-link" onclick="eraseText()">Clear</button>
 							<button type="submit" class="btn btn-default">Add</button>
 						</div>
 					</form>
@@ -110,6 +110,11 @@
 <jsp:include page="fragment/footer.jspf"/>
 
 
+<script>
+    function eraseText() {
+        document.getElementById("commentArea").value = "";
+    }
+</script>
 <script src="webjars/jquery/1.11.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 </body>

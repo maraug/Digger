@@ -11,8 +11,9 @@ import java.util.Date;
 })
 public class Comment extends BaseEntity {
 
-
 	public static final String FIND_BY_DISCOVERY_ID = "Comment.findByDiscoveryId";
+
+	@Column(nullable = false)
 	private String content;
 
 	private Date timestamp;

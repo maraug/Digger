@@ -3,7 +3,6 @@ package com.mrcs.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,13 +10,9 @@ import java.util.Set;
 @NamedQueries({
 		@NamedQuery(name = User.FIND_BY_USERNAME, query = "SELECT user FROM User user WHERE user.username = :username")
 })
-public class User implements Serializable {
+public class User extends BaseEntity{
 
 	public static final String FIND_BY_USERNAME = "User.findByUsername";
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long userId;
 
 	@Column(length = 20, nullable = false, unique = true)
 	private String username;
@@ -53,14 +48,6 @@ public class User implements Serializable {
 		this.password = user.password;
 		this.email = user.email;
 		this.role = user.role;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 	public String getUsername() {
